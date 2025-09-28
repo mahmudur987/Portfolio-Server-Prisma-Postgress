@@ -3,6 +3,8 @@ import cors from "cors";
 import express from "express";
 import { userRouter } from "./modules/user/user.route";
 import { postRouter } from "./modules/post/post.route";
+import { globalErrorHandler } from "./ErrorHandler/GlobalError";
+import { notFound } from "./middlewere/NotFound";
 
 const app = express();
 
@@ -20,8 +22,8 @@ app.use(
 
 // Default route for testing
 
-// app.use("/api/v1/users", userRouter);
-// app.use("/api/v1/posts", postRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/post", postRouter);
 app.get("/", (req, res) => {
   res.send("API is running");
 });
@@ -33,5 +35,6 @@ app.use((req, res, next) => {
     message: "Route Not Found",
   });
 });
-
+app.use(globalErrorHandler);
+app.use(notFound);
 export default app;

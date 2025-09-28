@@ -32,8 +32,8 @@ model User {
   email   String @unique
   password String?
   role    Role @default(USER)
-  phone   String
-  picture String
+  phone   String?
+  picture String? @default("https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")
   status  userStatus @default( ACTIVE )
   isVerified Boolean @default(false)
   createdAt DateTime @default(now())
@@ -50,37 +50,11 @@ model Post {
   authorId  String
   author User @relation(fields: [authorId], references: [id])
   thumbnail String?
-  isFeatured Boolean @default(false)
+  isPublished Boolean @default(false)
   tags String[]
   views   Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
-
-// sample json data of posts
-
-// [
-//   {
-//     "id": "1",
-//     "title": "Sample Post 1",
-//     "content": "This is the content of sample post 1.",
-//     "authorId": "1",
-//     "thumbnail": "https://example.com/post1-thumbnail.jpg",
-//     "isFeatured": true,
-//     "tags": ["tag1", "tag2"],
-//     "views": 100
-//   },
-//   {
-//     "id": "2",
-//     "title": "Sample Post 2",
-//     "content": "This is the content of sample post 2.",
-//     "authorId": "2",
-//     "thumbnail": "https://example.com/post2-thumbnail.jpg",
-//     "isFeatured": false,
-//     "tags": ["tag3", "tag4"],
-//     "views": 50
-//   }
-// ]
 
