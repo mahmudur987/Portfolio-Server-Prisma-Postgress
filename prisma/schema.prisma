@@ -1,0 +1,86 @@
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+        
+
+enum Role{
+  ADMIN
+  USER
+  }
+enum userStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  BLOCKED
+  }
+
+
+// user model
+
+model User {
+  id      String @id @default( uuid() )
+  name    String
+  email   String @unique
+  password String?
+  role    Role @default(USER)
+  phone   String
+  picture String
+  status  userStatus @default( ACTIVE )
+  isVerified Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+  Posts Post[]
+}
+
+
+// post model
+model Post {
+  id      String @id @default( uuid() )
+  title   String
+  content String
+  authorId  String
+  author User @relation(fields: [authorId], references: [id])
+  thumbnail String?
+  isFeatured Boolean @default(false)
+  tags String[]
+  views   Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+// sample json data of posts
+
+// [
+//   {
+//     "id": "1",
+//     "title": "Sample Post 1",
+//     "content": "This is the content of sample post 1.",
+//     "authorId": "1",
+//     "thumbnail": "https://example.com/post1-thumbnail.jpg",
+//     "isFeatured": true,
+//     "tags": ["tag1", "tag2"],
+//     "views": 100
+//   },
+//   {
+//     "id": "2",
+//     "title": "Sample Post 2",
+//     "content": "This is the content of sample post 2.",
+//     "authorId": "2",
+//     "thumbnail": "https://example.com/post2-thumbnail.jpg",
+//     "isFeatured": false,
+//     "tags": ["tag3", "tag4"],
+//     "views": 50
+//   }
+// ]
+
