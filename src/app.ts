@@ -1,16 +1,16 @@
 import compression from "compression";
 import cors from "cors";
 import express from "express";
-import { userRouter } from "./modules/user/user.route";
-import { postRouter } from "./modules/post/post.route";
-import { globalErrorHandler } from "./ErrorHandler/GlobalError";
-import { notFound } from "./middlewere/NotFound";
-import { projectRouter } from "./modules/projects/project.route";
+import { globalErrorHandler } from "./app/ErrorHandler/GlobalError";
+import { notFound } from "./app/middlewere/NotFound";
+import { userRouter } from "./app/modules/user/user.route";
+import { postRouter } from "./app/modules/post/post.route";
+import { projectRouter } from "./app/modules/projects/project.route";
 
 const app = express();
 
 // Middleware
-app.use(cors()); // Enables Cross-Origin Resource Sharing
+
 app.use(compression()); // Compresses response bodies for faster delivery
 app.use(express.json()); // Parse incoming JSON requests
 

@@ -1,68 +1,50 @@
-import http, { Server } from "http";
 import app from "./app";
 import dotenv from "dotenv";
-import connectDB from "./config/db";
-
+import connectDB from "./app/config/db";
 dotenv.config();
-
-let server: Server | null = null;
-
-async function startServer() {
-  try {
-    connectDB();
-    server = http.createServer(app);
-    server.listen(process.env.PORT, () => {
-      console.log(`🚀 Server is running on port ${process.env.PORT}`);
-    });
-
-    handleProcessEvents();
-  } catch (error) {
-    console.error("❌ Error during server startup:", error);
-    process.exit(1);
-  }
-}
-
-/**
- * Gracefully shutdown the server and close database connections.
- * @param {string} signal - The termination signal received.
- */
-async function gracefulShutdown(signal: string) {
-  console.warn(`🔄 Received ${signal}, shutting down gracefully...`);
-
-  if (server) {
-    server.close(async () => {
-      console.log("✅ HTTP server closed.");
-
-      try {
-        console.log("Server shutdown complete.");
-      } catch (error) {
-        console.error("❌ Error during shutdown:", error);
-      }
-
-      process.exit(0);
-    });
-  } else {
-    process.exit(0);
-  }
-}
-
-/**
- * Handle system signals and unexpected errors.
- */
-function handleProcessEvents() {
-  process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
-  process.on("SIGINT", () => gracefulShutdown("SIGINT"));
-
-  process.on("uncaughtException", (error) => {
-    console.error("💥 Uncaught Exception:", error);
-    gracefulShutdown("uncaughtException");
-  });
-
-  process.on("unhandledRejection", (reason) => {
-    console.error("💥 Unhandled Rejection:", reason);
-    gracefulShutdown("unhandledRejection");
-  });
-}
-
+const port = process.env.PORT || 4000;
 // Start the application
-startServer();
+(() => {
+  connectDB();
+})();
+
+const server = app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.log("Unhandled Rejection detected ...server shutting down", err);
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+process.on("uncaughtException", (err) => {
+  console.log("uncaught Exception detected ....server shutting down", err);
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+process.on("SIGTERM", () => {
+  console.log("Sigterm single detected ....server shutting down");
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+process.on("SIGINT", () => {
+  console.log("SIGINT single detected ....server shutting down");
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});

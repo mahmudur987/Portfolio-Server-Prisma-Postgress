@@ -1,4 +1,4 @@
-import { prisma } from "../../config/db";
+import { prisma } from "../../../app/config/db";
 import { User } from "./user.interface";
 import bcrypt from "bcrypt";
 const createUser = async (user: User) => {

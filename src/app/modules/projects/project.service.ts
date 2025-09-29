@@ -1,5 +1,5 @@
 import { projectType } from "@prisma/client";
-import { prisma } from "../../config/db";
+import { prisma } from "../../../app/config/db";
 import { Project } from "./projects.interface";
 
 const createProjects = async (project: Project) => {
