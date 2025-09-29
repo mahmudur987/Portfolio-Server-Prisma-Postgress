@@ -30,7 +30,7 @@ const getAllProjects = async (query: Record<string, string>) => {
 
   if (isPublished) {
     whereConditions.push({
-      isFeatured: isFeatured === "true" ? true : false,
+      isPublished: isPublished === "true" ? true : false,
     });
   }
 
