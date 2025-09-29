@@ -5,6 +5,7 @@ import { userRouter } from "./modules/user/user.route";
 import { postRouter } from "./modules/post/post.route";
 import { globalErrorHandler } from "./ErrorHandler/GlobalError";
 import { notFound } from "./middlewere/NotFound";
+import { projectRouter } from "./modules/projects/project.route";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/post", postRouter);
+app.use("/api/v1/project", projectRouter);
 app.get("/", (req, res) => {
   res.send("API is running");
 });

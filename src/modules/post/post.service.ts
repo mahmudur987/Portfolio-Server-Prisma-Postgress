@@ -36,7 +36,6 @@ const getAllPosts = async (query: Record<string, string>) => {
   }
 
   const where = whereConditions.length ? { AND: whereConditions } : {};
-  console.log(where);
   const result = await prisma.post.findMany({
     where,
     include: {

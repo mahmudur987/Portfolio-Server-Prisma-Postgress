@@ -10,8 +10,8 @@ async function main() {
   const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@example.com";
   const adminPass = process.env.SEED_ADMIN_PASSWORD || "123456";
 
-  // const hashed = await bcrypt.hash(adminPass, 10);
-  const hashed = adminPass;
+  const hashed = await bcrypt.hash(adminPass, 10);
+
   const existing = await prisma.user.findUnique({
     where: { email: adminEmail },
   });

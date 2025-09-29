@@ -16,6 +16,10 @@ enum Role{
   ADMIN
   USER
   }
+enum projectType{
+  Personal
+  Client
+  }
 enum userStatus {
   ACTIVE
   INACTIVE
@@ -58,3 +62,26 @@ model Post {
 }
 
 
+model Project {
+  id          String   @id @default(uuid())
+  projectName String
+  title       String
+  description String
+  picture     String
+  projectType  projectType @default(Personal)
+  // Arrays for multiple values
+  features     String[]
+  technologies String[]
+
+  // Optional timeline
+  startDate DateTime?
+  endDate   DateTime?
+
+  // Links
+  liveSite     String?
+  git_frontend String?
+  git_server   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
