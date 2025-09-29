@@ -3,18 +3,6 @@ import { userService } from "./user.service";
 import sendResponse from "../../utils/sendResponse";
 import statusCode from "http-status-codes";
 import { catchAsync } from "../../utils/CatchAsync";
-const credentialLogin = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const result = await userController.credentialLogin(req.body);
-
-    sendResponse(res, {
-      statusCode: statusCode.CREATED,
-      success: true,
-      message: "Login successfully",
-      data: result,
-    });
-  }
-);
 
 const createUser = catchAsync(async (req: Request, res: Response) => {
   const result = await userService.createUser(req.body);

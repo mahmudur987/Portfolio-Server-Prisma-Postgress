@@ -9,8 +9,7 @@
     "start": "node dist/server.js",
     "migrate": "npx prisma migrate dev",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:generate": "prisma generate",
-    "seed": "ts-node prisma/seed.ts"
+    "prisma:generate": "prisma generate"
   },
   "keywords": [],
   "author": "Next Level Web Development",
