@@ -1,13 +1,16 @@
+import { projectType } from "@prisma/client";
 import { prisma } from "../../config/db";
 import { Project } from "./projects.interface";
 
 const createProjects = async (project: Project) => {
-  const projects = {
-    ...project,
-    startDate: new Date(project.startDate),
-    endDate: new Date(project.endDate),
-  };
-  const result = await prisma.project.create({ data: projects });
+  const result = await prisma.project.create({
+    data: {
+      ...project,
+      projectType: project.projectType as projectType,
+      startDate: new Date(project.startDate),
+      endDate: new Date(project.endDate),
+    },
+  });
   return result;
 };
 
@@ -62,7 +65,53 @@ const getAllProjects = async (query: Record<string, string>) => {
     meta,
   };
 };
+
+const getProjectById = async (id: string) => {
+  const result = await prisma.project.findUnique({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
+const updateProject = async (id: string, project: Project) => {
+  const dataToUpdate: any = project;
+
+  if (project.projectType) {
+    dataToUpdate.projectType = project.projectType as projectType;
+  }
+
+  if (project.startDate) {
+    dataToUpdate.startDate = new Date(project.startDate);
+  }
+
+  if (project.endDate) {
+    dataToUpdate.endDate = new Date(project.endDate);
+  }
+
+  const result = await prisma.project.update({
+    where: {
+      id,
+    },
+    data: dataToUpdate,
+  });
+  return result;
+};
+
+const deleteProject = async (id: string) => {
+  const result = await prisma.project.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const projectService = {
   createProjects,
   getAllProjects,
+  getProjectById,
+  updateProject,
+  deleteProject,
 };
