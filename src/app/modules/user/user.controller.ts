@@ -23,15 +23,15 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getUserById = async (req: Request, res: Response) => {
-  try {
-    const result = await userService.getUserById(req.params.id);
-    res.send(result);
-  } catch (error) {
-    console.log(error);
-    res.send(error);
-  }
-};
+const getUserById = catchAsync(async (req: Request, res: Response) => {
+  const result = await userService.getUserById(req.params.id);
+  sendResponse(res, {
+    statusCode: statusCode.CREATED,
+    success: true,
+    message: "User retrieved successfully",
+    data: result,
+  });
+});
 const logInUser = catchAsync(async (req: Request, res: Response) => {
   const result = await userService.logInUser(req.body);
   sendResponse(res, {
