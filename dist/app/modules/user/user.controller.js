@@ -35,16 +35,15 @@ const getAllUsers = (0, CatchAsync_1.catchAsync)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
-const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield user_service_1.userService.getUserById(req.params.id);
-        res.send(result);
-    }
-    catch (error) {
-        console.log(error);
-        res.send(error);
-    }
-});
+const getUserById = (0, CatchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_service_1.userService.getUserById(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.default.CREATED,
+        success: true,
+        message: "User retrieved successfully",
+        data: result,
+    });
+}));
 const logInUser = (0, CatchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_service_1.userService.logInUser(req.body);
     (0, sendResponse_1.default)(res, {

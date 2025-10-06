@@ -20,8 +20,8 @@ dotenv_1.default.config();
 exports.prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@example.com";
-        const adminPass = process.env.SEED_ADMIN_PASSWORD || "123456";
+        const adminEmail = "admin@gmail.com";
+        const adminPass = "123456";
         const hashed = yield bcrypt_1.default.hash(adminPass, 10);
         const existing = yield exports.prisma.user.findUnique({
             where: { email: adminEmail },

@@ -6,16 +6,13 @@ dotenv.config();
 export const prisma = new PrismaClient();
 
 async function main() {
-  const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@example.com";
-  const adminPass = process.env.SEED_ADMIN_PASSWORD || "123456";
-
+  const adminEmail = "admin@gmail.com";
+  const adminPass = "123456";
   const hashed = await bcrypt.hash(adminPass, 10);
-
   const existing = await prisma.user.findUnique({
     where: { email: adminEmail },
   });
   console.log("connectDB");
-
   if (!existing) {
     await prisma.user.create({
       data: {
