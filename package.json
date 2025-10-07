@@ -25,14 +25,13 @@
   },
   "homepage": "https://github.com/mahmudur987/Portfolio-Server-Prisma-Postgress#readme",
   "dependencies": {
-    "@prisma/client": "^6.16.2",
+    "@prisma/client": "^6.16.3",
     "bcrypt": "^6.0.0",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
-    "http-status-codes": "^2.3.0",
-    "prisma": "^6.16.2"
+    "http-status-codes": "^2.3.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
@@ -40,6 +39,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.5.2",
+    "prisma": "^6.16.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2"
   }

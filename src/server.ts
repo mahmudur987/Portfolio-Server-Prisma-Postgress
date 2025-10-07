@@ -1,6 +1,7 @@
 import app from "./app";
 import dotenv from "dotenv";
-import connectDB from "./app/config/db";
+import connectDB from "./app/config";
+
 dotenv.config();
 const port = process.env.PORT || 4000;
 // Start the application
