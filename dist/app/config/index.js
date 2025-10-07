@@ -44,14 +44,14 @@ function main() {
     });
 }
 function connectDB() {
-    main()
-        .then(() => __awaiter(this, void 0, void 0, function* () {
-        yield db_1.default.$disconnect();
-    }))
-        .catch((e) => __awaiter(this, void 0, void 0, function* () {
-        console.error(e);
-        yield db_1.default.$disconnect();
-        process.exit(1);
-    }));
+    main();
+    // .then(async () => {
+    //   await prisma.$disconnect();
+    // })
+    // .catch(async (e) => {
+    //   console.error(e);
+    //   await prisma.$disconnect();
+    //   process.exit(1);
+    // });
 }
 exports.default = connectDB;
