@@ -44,15 +44,42 @@ const getAllUsers = async () => {
 };
 
 const getUserById = async (id: string) => {
-  const result = await prisma.user.findUnique({ where: { id } });
+  console.log(id);
+  const result = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      password: false,
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      phone: true,
+      address: true,
+      profilePicture: true,
+      logo: true,
+      socialLinks: true,
+      Experience: true,
+      Skills: true,
+      status: true,
+      createdAt: true,
+      isVerified: true,
+      updatedAt: true,
+      Posts: true,
+      _count: true,
+    },
+  });
   return result;
 };
 const updateUser = async (id: string, user: User) => {
   // Map string role to Prisma Role enum if present
-  const { role, ...rest } = user;
+  const { role, password, ...rest } = user;
   const data: any = { ...rest };
   if (role) {
     data.role = role as any;
+  }
+  if (password) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    data.password = hashedPassword;
   }
   const result = await prisma.user.update({ where: { id }, data });
   return result;

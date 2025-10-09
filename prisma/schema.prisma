@@ -26,7 +26,7 @@ enum userStatus {
   PENDING
   BLOCKED
   }
-
+// Removed invalid enum for socialLinks; use `Json` field on User to store structured social links.
 
 // user model
 
@@ -34,13 +34,18 @@ model User {
   id      String @id @default( uuid() )
   name    String
   email   String @unique
-  password String?
+  password String
   role    Role @default(USER)
-  phone   String?
-  picture String? @default("https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")
+  phone   String @default("+8801671706882")
+  address String @default("Dhaka, Bangladesh")
+  profilePicture String? @default("https://i.ibb.co.com/S4KB6Hn4/PROFILE-2.png")
+  logo    String     @default("https://i.ibb.co.com/n8mwFtDD/logo.png")
+  socialLinks Json? 
+  Experience Json?
+  Skills Json?
   status  userStatus @default( ACTIVE )
-  isVerified Boolean @default(false)
-  createdAt DateTime @default(now())
+  createdAt DateTime? @default(now())
+  isVerified Boolean? @default(false)
   updatedAt DateTime @updatedAt 
   Posts Post[]
 }

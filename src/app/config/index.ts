@@ -16,10 +16,10 @@ async function main() {
       data: {
         email: adminEmail,
         password: hashed,
-        name: "Portfolio Owner",
+        name: "Md Maahmudur Rahman",
         role: "ADMIN",
         phone: "01671706882",
-        picture: "https://i.pravatar.cc/150?img=1",
+        address: "21/2,Mhodubon Hotel,Moddhopara,Meraddia,Khilgaon,Dhaka-1207 ",
       },
     });
     console.log(`Seeded admin -> ${adminEmail} / ${adminPass}`);

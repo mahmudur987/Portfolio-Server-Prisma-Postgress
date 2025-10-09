@@ -66,15 +66,42 @@ const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const getUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield db_1.prisma.user.findUnique({ where: { id } });
+    console.log(id);
+    const result = yield db_1.prisma.user.findUnique({
+        where: { id },
+        select: {
+            password: false,
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            phone: true,
+            address: true,
+            profilePicture: true,
+            logo: true,
+            socialLinks: true,
+            Experience: true,
+            Skills: true,
+            status: true,
+            createdAt: true,
+            isVerified: true,
+            updatedAt: true,
+            Posts: true,
+            _count: true,
+        },
+    });
     return result;
 });
 const updateUser = (id, user) => __awaiter(void 0, void 0, void 0, function* () {
     // Map string role to Prisma Role enum if present
-    const { role } = user, rest = __rest(user, ["role"]);
+    const { role, password } = user, rest = __rest(user, ["role", "password"]);
     const data = Object.assign({}, rest);
     if (role) {
         data.role = role;
+    }
+    if (password) {
+        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        data.password = hashedPassword;
     }
     const result = yield db_1.prisma.user.update({ where: { id }, data });
     return result;
